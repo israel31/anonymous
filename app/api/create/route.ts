@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
   }
 
   const questionId = nanoid(8); // e.g., 'aKq3sLp8'
-  const resultsId = `secret-${nanoid(12)}`; // e.g., 'secret-xZp9rM2v'
+  const resultsId = `secret-${nanoid(12)}`; // e.g., 'secret-xZp9rMv'
 
   const questionData = {
     questionText: question,

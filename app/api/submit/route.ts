@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
   const { questionId, answer } = await request.json();
 
   if (!questionId || !answer) {
-    return NextResponse.json({ message: 'Missing data' }, { status: 400 });
+    return NextResponse.json({ message: 'Missing data' }, { status: 400 }); 
   }
 
   try {
