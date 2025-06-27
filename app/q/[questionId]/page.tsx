@@ -1,15 +1,31 @@
-// This is a pure Server Component. No 'use client', no useState.
 import { kv } from '@/lib/kv';
-import AnswerForm from '@/components/AnswerForm'; // Import the component from its new file
+import AnswerForm from '@/components/AnswerForm';
 
-export default async function QuestionPage({ params }: { params: { questionId: string } }) {
-  const questionId = params.questionId;
+// We are explicitly defining what the props for this page should look like.
+// This makes TypeScript very happy.
+interface QuestionPageProps {
+  params: {
+    questionId: string;
+  };
+}
+
+// Now, we use our clear definition here.
+export default async function QuestionPage({ params }: QuestionPageProps) {
+  const { questionId } = params; // A cleaner way to get the id
   const questionData: { questionText: string } | null = await kv.get(questionId);
 
   if (!questionData) {
-    return <div className="text-center p-4"><h1>Question not found.</h1></div>;
+    return (
+      <div className="text-center p-4">
+        <h1>Question not found.</h1>
+      </div>
+    );
   }
 
-  // Pass the server data to the client component as props
-  return <AnswerForm questionId={questionId} questionText={questionData.questionText} />;
+  return (
+    <AnswerForm
+      questionId={questionId}
+      questionText={questionData.questionText}
+    />
+  );
 }
