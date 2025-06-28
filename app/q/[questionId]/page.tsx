@@ -1,9 +1,16 @@
 import { kv } from '@/lib/kv';
 import AnswerForm from '@/components/AnswerForm';
 
-// This is the simplest and most robust way to type the props for a page.
-// We are not using a custom interface, to avoid any conflicts.
-export default async function QuestionPage({ params }: { params: { questionId: string } }) {
+// This is the full, official type definition for props on a dynamic page.
+// It includes searchParams, which we aren't using, but defining it
+// satisfies the compiler and removes all ambiguity. THIS IS THE KEY.
+type Props = {
+  params: { questionId: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+// We apply our robust, official type here.
+export default async function QuestionPage({ params }: Props) {
   const { questionId } = params;
   const questionData: { questionText: string } | null = await kv.get(questionId);
 
